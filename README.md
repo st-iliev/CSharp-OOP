@@ -9,6 +9,6 @@ Here is a list of all topics that were covered during the course.
 * Exceptions and Error Handling
 * SOLID
 * [Reflection and Attributes](https://github.com/st-iliev/CSharp-OOP/tree/main/Reflection%20and%20Attributes%20-%20Exercise)
-* [Unit Testing]()
+* [Unit Testing](https://github.com/st-iliev/CSharp-OOP/tree/main/Unit%20Testing%20-%20Exercise)
 * [Mocking and Test Driven Development]()
 * [Design Patterns]()
