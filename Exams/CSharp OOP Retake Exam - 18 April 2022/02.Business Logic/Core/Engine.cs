@@ -1,9 +1,10 @@
-﻿namespace Heroes.Core
+﻿namespace Easter.Core
 {
     using System;
-    using Heroes.IO;
-    using Heroes.IO.Contracts;
-    using Heroes.Core.Contracts;
+
+    using Easter.IO;
+    using Easter.IO.Contracts;
+    using Easter.Core.Contracts;
 
     public class Engine : IEngine
     {
@@ -15,7 +16,7 @@
         {
             this.writer = new Writer();
             this.reader = new Reader();
-             this.controller = new Controller();
+            this.controller = new Controller();
         }
 
         public void Run()
@@ -31,37 +32,36 @@
                 {
                     string result = string.Empty;
 
-                    if (input[0] == "CreateHero")
+                    if (input[0] == "AddBunny")
                     {
-                        string type = input[1];
-                        string name = input[2];
-                        int health = int.Parse(input[3]);
-                        int armour = int.Parse(input[4]);
+                        string bunnyType = input[1];
+                        string bunnyName = input[2];
 
-                        result = controller.CreateHero(type, name, health, armour);
+                        result = controller.AddBunny(bunnyType, bunnyName);
                     }
-                    else if (input[0] == "CreateWeapon")
+                    else if (input[0] == "AddEgg")
                     {
-                        string weaponType = input[1];
-                        string name = input[2];
-                        int durability = int.Parse(input[3]);
+                        string eggName = input[1];
+                        int energyRequired = int.Parse(input[2]);
 
-                        result = controller.CreateWeapon(weaponType, name, durability);
+                        result = controller.AddEgg(eggName, energyRequired);
                     }
-                    else if (input[0] == "AddWeaponToHero")
+                    else if (input[0] == "AddDyeToBunny")
                     {
-                        string weaponName = input[1];
-                        string heroName = input[2];
+                        string bunnyName = input[1];
+                        int power = int.Parse(input[2]);
 
-                        result = controller.AddWeaponToHero(weaponName, heroName);
+                        result = controller.AddDyeToBunny(bunnyName, power);
                     }
-                    else if (input[0] == "StartBattle")
+                    else if (input[0] == "ColorEgg")
                     {
-                        result = controller.StartBattle();
+                        string eggName = input[1];
+
+                        result = controller.ColorEgg(eggName);
                     }
-                    else if (input[0] == "HeroReport")
+                    else if (input[0] == "Report")
                     {
-                        result = controller.HeroReport();
+                        result = controller.Report();
                     }
 
                     writer.WriteLine(result);

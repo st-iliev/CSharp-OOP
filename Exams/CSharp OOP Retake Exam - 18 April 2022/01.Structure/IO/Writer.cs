@@ -1,7 +1,9 @@
-﻿namespace Heroes.IO
+﻿namespace Easter.IO
 {
     using System;
-    using Heroes.IO.Contracts;
+
+    using Easter.IO.Contracts;
+
     public class Writer : IWriter
     {
         public void Write(string message)

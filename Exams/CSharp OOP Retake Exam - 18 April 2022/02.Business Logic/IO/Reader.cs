@@ -1,7 +1,9 @@
-﻿namespace Heroes.IO
+﻿namespace Easter.IO
 {
     using System;
-    using Heroes.IO.Contracts;
+
+    using Easter.IO.Contracts;
+
     public class Reader : IReader
     {
         public string ReadLine()

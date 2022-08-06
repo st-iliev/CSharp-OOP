@@ -1,6 +1,7 @@
-﻿namespace Heroes.Repositories.Contracts
+﻿namespace Easter.Repositories.Contracts
 {
     using System.Collections.Generic;
+
     public interface IRepository<T>
     {
         IReadOnlyCollection<T> Models { get; }

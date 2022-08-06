@@ -1,4 +1,4 @@
-﻿namespace Heroes.IO.Contracts
+﻿namespace Easter.IO.Contracts
 {
     public interface IReader
     {

@@ -1,15 +1,15 @@
-﻿namespace Heroes.Core.Contracts
+﻿namespace Easter.Core.Contracts
 {
     public interface IController
     {
-        string CreateWeapon(string type, string name, int durability);
+        string AddBunny(string bunnyType, string bunnyName);
 
-        string CreateHero(string type, string name, int health, int armour);
+        string AddDyeToBunny(string bunnyName, int power);
 
-        string AddWeaponToHero(string weaponName, string heroName);
+        string AddEgg(string eggName, int energyRequired);
 
-        string StartBattle();
+        string ColorEgg(string eggName);
 
-        string HeroReport();       
+        string Report();
     }
 }
