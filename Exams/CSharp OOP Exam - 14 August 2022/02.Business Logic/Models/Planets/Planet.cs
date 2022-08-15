@@ -14,8 +14,8 @@ namespace PlanetWars.Models.Planets
 {
     public class Planet : IPlanet
     {
-        private ICollection<IMilitaryUnit> units;
-        private ICollection<IWeapon> weapons;
+        private UnitRepository units;
+        private WeaponRepository weapons;
         private string name;
         private double budget;
         private double militaryPower;
@@ -23,8 +23,8 @@ namespace PlanetWars.Models.Planets
         {
             this.Name = name;
             this.Budget = budget;
-            this.units = new List<IMilitaryUnit>();
-            this.weapons = new List<IWeapon>();
+            this.units = new UnitRepository();
+            this.weapons = new WeaponRepository();
         }
         public string Name
         {
@@ -51,34 +51,35 @@ namespace PlanetWars.Models.Planets
             }
         }
         public double MilitaryPower => CalculateValues();
-        
+
         private double CalculateValues()
         {
-            double totalAmount = this.Army.Sum(s => s.EnduranceLevel) + Weapons.Sum(s => s.DestructionLevel);
-            if (Army.Any(s => s.GetType().Name == nameof(AnonymousImpactUnit)))
-            {
-                totalAmount = totalAmount + (totalAmount * 0.3);
-            }
-            else if (Weapons.Any(s => s.GetType().Name == nameof(NuclearWeapon)))
-            {
-                totalAmount = totalAmount + (totalAmount * 0.45);
-            }
-            return Math.Round(totalAmount,3);
+            double totalValue = this.Army.Sum(s => s.EnduranceLevel) +this.Weapons.Sum(s => s.DestructionLevel);
 
+            if (Army.Any(s => s.GetType().Name == "AnonymousImpactUnit"))
+            {
+                totalValue *= 1.3;
+            }
 
+            if (Weapons.Any(s => s.GetType().Name == "NuclearWeapon"))
+            {
+                totalValue *= 1.45;
+            }
+
+            return Math.Round(totalValue, 3);
         }
-        public IReadOnlyCollection<IMilitaryUnit> Army => (IReadOnlyCollection<IMilitaryUnit>)units;
+        public IReadOnlyCollection<IMilitaryUnit> Army => units.Models;
 
-        public IReadOnlyCollection<IWeapon> Weapons => (IReadOnlyCollection<IWeapon>)weapons;
+        public IReadOnlyCollection<IWeapon> Weapons => weapons.Models;
 
         public void AddUnit(IMilitaryUnit unit)
         {
-            units.Add(unit);
+            units.AddItem(unit);
         }
 
         public void AddWeapon(IWeapon weapon)
         {
-            weapons.Add(weapon);
+            weapons.AddItem(weapon);
         }
 
         public string PlanetInfo()
@@ -86,26 +87,13 @@ namespace PlanetWars.Models.Planets
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Planet: {this.Name}");
             sb.AppendLine($"--Budget: { this.Budget} billion QUID");
-            string units = "";
-            if (Army.Count > 0)
-            {
-                units = string.Join(", ", Army.Select(s => s.GetType().Name));
-            }
-            else
-            {
-                units = "No units";
-            }
+
+            string units = Army.Any() ? string.Join(", ", Army.Select(u => u.GetType().Name)) : "No units";
             sb.AppendLine($"--Forces: {units}");
-            string weapons = "";
-            if (Weapons.Count > 0)
-            {
-                weapons = string.Join(", ", Weapons.Select(s => s.GetType().Name)); ;
-            }
-            else
-            {
-                weapons = "No weapons";
-            }
+
+            string weapons = Weapons.Any() ? string.Join(", ", Weapons.Select(w => w.GetType().Name)) : "No weapons";
             sb.AppendLine($"--Combat equipment: {weapons}");
+
             sb.AppendLine($"--Military Power: {this.MilitaryPower}");
             return sb.ToString().TrimEnd();
         }
@@ -121,15 +109,12 @@ namespace PlanetWars.Models.Planets
             {
                 throw new InvalidOperationException(ExceptionMessages.UnsufficientBudget);
             }
-            else
-            {
-                this.Budget -= amount;
-            }
+            this.Budget -= amount;
         }
 
         public void TrainArmy()
         {
-            foreach (var unit in units)
+            foreach (var unit in Army)
             {
                 unit.IncreaseEndurance();
             }

@@ -8,18 +8,14 @@ namespace PlanetWars.Models.Weapons
 {
     public abstract class Weapon : IWeapon
     {
-        private double price;
         private int destructionLevel;
         public Weapon(int destructionLevel, double price)
         {
-            this.Price = price;
             this.DestructionLevel = destructionLevel;
+            this.Price = price;
         }
-        public double Price
-        {
-            get => price;
-            private set =>this.price = value;
-        }
+        public double Price { get; set; }
+       
         public  int DestructionLevel
         {
             get => destructionLevel;

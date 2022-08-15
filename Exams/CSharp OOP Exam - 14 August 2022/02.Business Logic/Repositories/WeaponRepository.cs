@@ -10,24 +10,19 @@ namespace PlanetWars.Repositories
 {
     public class WeaponRepository : IRepository<IWeapon>
     {
-        private readonly ICollection<IWeapon> models;
+        private readonly List<IWeapon> models;
 
         public WeaponRepository()
         {
             this.models = new List<IWeapon>();
         }
-        public IReadOnlyCollection<IWeapon> Models => (IReadOnlyCollection<IWeapon>)models;
+        public IReadOnlyCollection<IWeapon> Models => models;
 
         public void AddItem(IWeapon model) => models.Add(model);
 
         public IWeapon FindByName(string name) => models.FirstOrDefault(s => s.GetType().Name == name);
 
-        public bool RemoveItem(string name)
-        {
-            IWeapon weapon = models.FirstOrDefault(s => s.GetType().Name == name);
-            return models.Remove(weapon);
-
-        }
+        public bool RemoveItem(string name) => models.Remove(models.FirstOrDefault(s => s.GetType().Name == name));
 
     }
 }
