@@ -9,12 +9,12 @@ namespace PlanetWars.Repositories
 {
     public class PlanetRepository : IRepository<IPlanet>
     {
-        private readonly ICollection<IPlanet> models;
+        private readonly List<IPlanet> models;
         public PlanetRepository()
         {
             this.models = new List<IPlanet>();
         }
-        public IReadOnlyCollection<IPlanet> Models => (IReadOnlyCollection<IPlanet>)models;
+        public IReadOnlyCollection<IPlanet> Models => models;
 
         public void AddItem(IPlanet model) => models.Add(model);
       
@@ -22,11 +22,7 @@ namespace PlanetWars.Repositories
         public IPlanet FindByName(string name) => models.FirstOrDefault(s => s.Name == name);
         
 
-        public bool RemoveItem(string name)
-        {
-            IPlanet planet = models.FirstOrDefault(s => s.Name == name);
-            return models.Remove(planet);
-        }
+        public bool RemoveItem(string name) =>  models.Remove(models.FirstOrDefault(s => s.Name == name));
         
     }
 }

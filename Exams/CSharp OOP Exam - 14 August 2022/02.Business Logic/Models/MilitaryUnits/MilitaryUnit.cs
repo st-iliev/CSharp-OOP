@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PlanetWars.Models.MilitaryUnits
 {
-    public class MilitaryUnit : IMilitaryUnit
+    public abstract class MilitaryUnit : IMilitaryUnit
     {
         private double cost;
         private int enduranceLevel = 1;
@@ -24,7 +24,7 @@ namespace PlanetWars.Models.MilitaryUnits
 
         public void IncreaseEndurance()
         {
-            enduranceLevel += 1;
+            enduranceLevel++;
             if (enduranceLevel > 20)
             {
                 enduranceLevel = 20;
